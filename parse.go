@@ -15,16 +15,16 @@ import (
 const PARSE_URL = "https://api.parse.com/1"
 
 var APP_ID string
-var API_KEY string
+var REST_API_KEY string
 var session napping.Session
 
 func InitAPI(appId, apiKey string) {
 	APP_ID = appId
-	API_KEY = apiKey
+	REST_API_KEY = apiKey
 
 	header := http.Header{}
 	header.Set("X-Parse-Application-Id", APP_ID)
-	header.Set("X-Parse-REST-API-Key", API_KEY)
+	header.Set("X-Parse-REST-API-Key", REST_API_KEY)
 
 	session = napping.Session{Header: &header}
 }
