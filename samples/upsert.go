@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"git.ccsas.biz/zilia_parse"
+	"github.com/vitaminwater/goparse"
 )
 
 func main() {
