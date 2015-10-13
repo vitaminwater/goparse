@@ -3,6 +3,8 @@ Introduction
 
 This is juste a simple and incomplete abstraction over [Parse](http://parse.com) Rest API.
 
+Please read the Parse [Rest API docs](https://parse.com/docs/rest/guide) first.
+
 API
 ===
 
@@ -21,3 +23,7 @@ Collection.
 
 the `ClassObject` inherits from `Object`, and adds a `Save` method to
 send to Parse, and `Delete` to delete the entry.
+
+`Save` does insert or update based on the presence or not of an
+`objectId` field in the object.
+It adds the `objectId` field on insert.
