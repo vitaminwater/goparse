@@ -105,6 +105,21 @@ func (o *Object) Set(key string, value interface{}) {
 	o.fields[key] = value
 }
 
+func (o *Object) SetNested(path []string, value interface{}) error {
+	c := path[0]
+	path = path[1:]
+	if len(path) > 0 {
+		co, err := o.AssertObject(c)
+		if err != nil {
+			return err
+		}
+		return co.SetNested(path, value)
+	} else {
+		o.Set(c, value)
+	}
+	return nil
+}
+
 func (o *Object) Get(key string) (value interface{}, ok bool) {
 	value, ok = o.fields[key]
 	return
@@ -150,6 +165,15 @@ func (o *Object) GetObject(key string) (value *Object, ok bool) {
 		return
 	}
 	value, ok = v.(*Object)
+	return
+}
+
+func (o *Object) GetArray(key string) (value []interface{}, ok bool) {
+	v, ok := o.Get(key)
+	if ok == false {
+		return
+	}
+	value, ok = v.([]interface{})
 	return
 }
 
