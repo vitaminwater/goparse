@@ -5,6 +5,8 @@ This is juste a simple and incomplete abstraction over [Parse](http://parse.com)
 
 Please read the Parse [Rest API docs](https://parse.com/docs/rest/guide) first.
 
+This library is designed to be used in [goparse-scrap](https://github.com/vitaminwater/goparse-scrap).
+
 API
 ===
 
