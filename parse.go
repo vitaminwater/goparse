@@ -1,11 +1,11 @@
 package parse
 
 import (
-	"fmt"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
-  "github.com/jmcvetta/napping"
+	"github.com/jmcvetta/napping"
 )
 
 /**
@@ -35,7 +35,7 @@ func InitAPI(appId, apiKey string) {
 
 type Object struct {
 	changedKeys []string
-	fields map[string]interface{}
+	fields      map[string]interface{}
 }
 
 // Constructor
@@ -177,6 +177,21 @@ func (o *Object) GetArray(key string) (value []interface{}, ok bool) {
 	return
 }
 
+func (o *Object) GetLen(path []string) int {
+	if len(path) > 1 {
+		v, ok := o.GetObject(path[0])
+		if ok == false {
+			return 0
+		}
+		return v.GetLen(path[1:])
+	}
+	v, ok := o.GetArray(path[0])
+	if ok == false {
+		return 0
+	}
+	return len(v)
+}
+
 // Ensure that the value under a given `key` is an Object instance
 func (o *Object) AssertObject(key string) (*Object, error) {
 	v, ok := o.Get(key)
@@ -269,7 +284,7 @@ func (co *ClassObject) get() error {
 	url := fmt.Sprintf("%s/classes/%s/%s", PARSE_URL, co.class, objectId)
 
 	errorData := map[string]interface{}{}
-	
+
 	responseData := map[string]interface{}{}
 	response, err := session.Get(url, nil, &responseData, errorData)
 	if err != nil {
@@ -289,9 +304,9 @@ func (co *ClassObject) get() error {
 
 func (co *ClassObject) post() error {
 	url := fmt.Sprintf("%s/classes/%s", PARSE_URL, co.class)
-	
+
 	errorData := map[string]interface{}{}
-	
+
 	requestObj := co.postMap()
 	responseData := map[string]interface{}{}
 	response, err := session.Post(url, requestObj, &responseData, &errorData)
@@ -319,7 +334,7 @@ func (co *ClassObject) put() error {
 	url := fmt.Sprintf("%s/classes/%s/%s", PARSE_URL, co.class, objectId)
 
 	errorData := map[string]interface{}{}
-	
+
 	requestObj := co.putMap()
 	responseData := map[string]interface{}{}
 	response, err := session.Put(url, requestObj, &responseData, &errorData)
@@ -347,7 +362,7 @@ func (co *ClassObject) del() error {
 	url := fmt.Sprintf("%s/classes/%s/%s", PARSE_URL, co.class, objectId)
 
 	errorData := map[string]interface{}{}
-	
+
 	responseData := map[string]interface{}{}
 	response, err := session.Delete(url, &responseData, &errorData)
 	if err != nil {
